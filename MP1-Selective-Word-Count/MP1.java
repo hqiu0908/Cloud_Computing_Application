@@ -63,13 +63,13 @@ public class MP1 {
         ArrayList<ArrayList<String>> words = new ArrayList<ArrayList<String>>();
         
         while ((line = br.readLine()) != null) {
-        	// ([ (and ]) are not standard characters inside a regEx
-        	// need to be escaped.
+            // ([ (and ]) are not standard characters inside a regEx
+            // need to be escaped.
             String[] results = line.split(delimiters);
             
             ArrayList<String> eachLine = new ArrayList<String>();
             for (String word : results) {
-            	eachLine.add(word);
+                eachLine.add(word);
             }
             
             words.add(eachLine);
@@ -83,24 +83,24 @@ public class MP1 {
         ArrayList<String> stopWordsArrayList = new ArrayList<String>();
         
         for (int i = 0; i < stopWordsArray.length; i++) {
-        	stopWordsArrayList.add(stopWordsArray[i]);
+            stopWordsArrayList.add(stopWordsArray[i]);
         }
         
         ArrayList<ArrayList<String>> processed_words = new ArrayList<ArrayList<String>>();
 
         for (int i = 0; i < words.size(); i++) {
-        	ArrayList<String> eachLine = words.get(i);
-        	ArrayList<String> newLine = new ArrayList<String>();
-        	
-        	for (int j = 0; j < eachLine.size(); j++) {
-        		String word = eachLine.get(j).toLowerCase().trim();
-        		
-        		if (! stopWordsArrayList.contains(word)) {
-        			newLine.add(word);
-            	}
-        	}
-        	
-        	processed_words.add(newLine);
+            ArrayList<String> eachLine = words.get(i);
+            ArrayList<String> newLine = new ArrayList<String>();
+            
+            for (int j = 0; j < eachLine.size(); j++) {
+                String word = eachLine.get(j).toLowerCase().trim();
+                
+                if (! stopWordsArrayList.contains(word)) {
+                    newLine.add(word);
+                }
+            }
+            
+            processed_words.add(newLine);
         }
         
         // 5. Keep track of word frequencies.
@@ -109,37 +109,37 @@ public class MP1 {
         Integer[] indexes = this.getIndexes();
         
         for (int i = 0; i < indexes.length; i++) {
-        	ArrayList<String> eachLine = processed_words.get(indexes[i]);
-        	
-        	for (int j = 0; j < eachLine.size(); j++) {
-        		String word = eachLine.get(j);
-        	
-        		if (wordFreq.containsKey(word)) {
-        			wordFreq.put(word, wordFreq.get(word) + 1);
-        		} else {
-        			wordFreq.put(word, 1);
-        		}
-        	}
+            ArrayList<String> eachLine = processed_words.get(indexes[i]);
+            
+            for (int j = 0; j < eachLine.size(); j++) {
+                String word = eachLine.get(j);
+            
+                if (wordFreq.containsKey(word)) {
+                    wordFreq.put(word, wordFreq.get(word) + 1);
+                } else {
+                    wordFreq.put(word, 1);
+                }
+            }
         }
         
         // 6. Sort the list by frequency in a descending order.
         List<Map.Entry<String, Integer>> hashmapList = new LinkedList<Map.Entry<String, Integer>>(wordFreq.entrySet());
         
         Collections.sort(hashmapList, new Comparator<Map.Entry<String, Integer>>() {
-        	public int compare(Map.Entry<String, Integer> left, Map.Entry<String, Integer> right) {
-        		if (left.getValue() != right.getValue()) {
-        			return right.getValue() - left.getValue();
-        		}
-        		
-        		return left.getKey().compareTo(right.getKey());
-        	}
+            public int compare(Map.Entry<String, Integer> left, Map.Entry<String, Integer> right) {
+                if (left.getValue() != right.getValue()) {
+                    return right.getValue() - left.getValue();
+                }
+                
+                return left.getKey().compareTo(right.getKey());
+            }
         });
         
         
         // 7. Return the top 20 items from the sorted list as a String Array.
         for (int i = 0; i < 20; i++) {
-        	// System.out.println(hashmapList.get(i).getKey() + "  " + hashmapList.get(i).getValue());
-        	ret[i] = hashmapList.get(i).getKey();
+            // System.out.println(hashmapList.get(i).getKey() + "  " + hashmapList.get(i).getValue());
+            ret[i] = hashmapList.get(i).getKey();
         }
         
         return ret;
